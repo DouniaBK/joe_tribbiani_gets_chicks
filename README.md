@@ -1,6 +1,6 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
-Welcome USER_NAME,
+Welcome DouniaBK,
 
 This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **August 17, 2021**
 
@@ -29,3 +29,13 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 -----
 Happy coding!
+
+Notes:
+Features ideas:
+
+Create a 2-player version.
+Add pastrami sandwiches as rewards after caching enough chicks
+Add obstacles for Joe like his friends
+Incrementally speed up the game as it goes on, to make it harder.
+Add better graphics, utilizing the pygame image modules to load "sprites" and textures for the game.
+Add sound effects and music using pygame's sound functions.
