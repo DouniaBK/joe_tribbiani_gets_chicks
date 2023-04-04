@@ -1,4 +1,6 @@
 
+from pytimedinput import timedInput
+import os
 """ 
 setting the field's hight and width
 setting the field's end zone and borders
@@ -19,15 +21,13 @@ def print_field():
         if cell[0] == FIELD_WIDTH - 1:
             print('')
 """
-Move the snack
+Move the snack by updating its position by giving the snack a new head and popping
+the last element.
 """
 def move_joe():
     new_head = joes_body[0][0] + direction[0], joes_body[0][1] + direction[1]
     joes_body.insert(0, new_head)
     joes_body.pop(-1)
-
-
-
 
 
 # Field settings
@@ -49,8 +49,25 @@ if the order is not from high to low the body will then crash with the head
 joes_body = [(5, FIELD_HEIGHT // 2),(4, FIELD_HEIGHT // 2),(3, FIELD_HEIGHT // 2)]
 DIRECTIONS = {'left': (-1,0),'right': (1,0),'up': (0,-1,),'down': (0,1)}
 direction = DIRECTIONS{'right'} #start of direction
+"""
+limit the speed of the while loop to 0.3ms
+run the game over and over until we break it with some command
+without the while loop the game will only run once
+"""
+while True:
+    # clear field as in terminal
+	os.system('cls')
 
 
-print_field()
+    # draw the game field
+    print_field()
+
+    # get text that was entered and timeout input
+	txt,_ = timedInput('',timeout = 0.3)
+
+
+    #update game elements position
+    move_joe()
+    
 
 
