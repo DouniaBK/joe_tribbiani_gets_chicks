@@ -48,22 +48,31 @@ if the order is not from high to low the body will then crash with the head
 """
 joes_body = [(5, FIELD_HEIGHT // 2),(4, FIELD_HEIGHT // 2),(3, FIELD_HEIGHT // 2)]
 DIRECTIONS = {'left': (-1,0),'right': (1,0),'up': (0,-1,),'down': (0,1)}
-direction = DIRECTIONS{'right'} #start of direction
+#start of direction
+direction = DIRECTIONS['right']
+
+
 """
 limit the speed of the while loop to 0.3ms
 run the game over and over until we break it with some command
 without the while loop the game will only run once
 """
 while True:
-    # clear field as in terminal
+    # clear field in terminal
 	os.system('cls')
-
-
     # draw the game field
-    print_field()
-
-    # get text that was entered and timeout input
+    print_field ()
+    # get text that was entered and timed input
 	txt,_ = timedInput('',timeout = 0.3)
+    match txt:
+        case 'w': direction = DIRECTIONS ['up']
+        case 'a': direction = DIRECTIONS ['left']
+        case 's': direction = DIRECTIONS ['down']
+        case 'd': direction = DIRECTIONS ['right']
+        case 'q':
+            os.system('cls')
+            break
+        
 
 
     #update game elements position
