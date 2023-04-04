@@ -18,7 +18,13 @@ def print_field():
             print(' ', end='')
         if cell[0] == FIELD_WIDTH - 1:
             print('')
-
+"""
+Move the snack
+"""
+def move_joe():
+    new_head = joes_body[0][0] + direction[0], joes_body[0][1] + direction[1]
+    joes_body.insert(0, new_head)
+    joes_body.pop(-1)
 
 
 
