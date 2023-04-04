@@ -2,18 +2,16 @@
 from pytimedinput import timedInput
 import os
 from random import randint
+from colorama import Fore, init
 
 """ 
 setting the field's hight and width
 setting the field's end zone and borders
 """
-
-
 def print_field():
     for cell in CELLS:
         if cell in joes_body:
             print('🤵🏽', end='')
-
         elif cell[0] in (0, FIELD_WIDTH - 1) or cell[1] in (0, FIELD_HEIGHT - 1):
             print('🏿', end='')
         elif cell == chick_position:
@@ -22,6 +20,8 @@ def print_field():
             print(' ', end='')
         if cell[0] == FIELD_WIDTH - 1:
             print('')
+
+            
 """
 Move the snack by updating its position by giving the snack a new head and popping
 the last element.
@@ -35,7 +35,12 @@ def move_joe():
     if not eaten:
         joes_body.pop(-1)
     eaten = False
-
+"""
+check if the head of the snake is not in the same position than
+the chick
+if that is the case the chick should get a new position
+if the snake eats the chick
+"""
 def chick_collision():
     global chick_position, eaten
 
@@ -44,6 +49,11 @@ def chick_collision():
         eaten = True
 
 
+"""
+Place the chick in a new random position after being eaten
+Make sure the new position is not on the border or
+right where the snake is
+"""
 def new_position():
     col = randint(1, FIELD_WIDTH - 2)
     row = randint(1, FIELD_HEIGHT - 2)
@@ -52,6 +62,8 @@ def new_position():
         col = randint(1, FIELD_WIDTH -2)
         row = randint(1, FIELD_HEIGHT -2)
     return (col, row)
+
+init(autoreset=True)
 
 # Field settings
 FIELD_WIDTH = 32
@@ -80,15 +92,13 @@ run the game over and over until we break it with some command
 without the while loop the game will only run once
 """
 while True:
-    # clear field in terminal
+	# clear field
 	os.system('cls')
+	
+	# draw field
+	print_field()
 
-
-    # draw the game field
-    print_field()
-
-
-    # get text that was entered and timed input
+	# get text that was entered and timed input
 	txt,_ = timedInput('',timeout = 0.3)
     match txt:
         case 'w': direction = DIRECTIONS ['up']
@@ -98,7 +108,6 @@ while True:
         case 'q':
             os.system('cls')
             break
-        
 
 
     #update game elements position
@@ -106,10 +115,10 @@ while True:
     chick_collision()
 
     #check death if snake crashes against the border or bites itself
-    if joes_body[0][0] in (0, FIELD_WIDTH -1) or \
-        joes_body[0][1] in (0, FIELD_HEIGHT -1) or \
-        joes_body[0] in joes_body[1:]
-        os.system('cls')
+    if joes_body[0][1] in (0, FIELD_WIDTH -1) or \
+        joes_body[0][0] in (0, FIELD_HEIGHT -1) or \
+        joes_body[0] in joes_body[1:]:
+            os.system('cls')
             break
 
     
