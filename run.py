@@ -25,12 +25,16 @@ def print_field():
 """
 Move the snack by updating its position by giving the snack a new head and popping
 the last element.
+everytime the snake eats a chick, it gets larger by one cell
 """
 def move_joe():
+    global eaten
+
     new_head = joes_body[0][0] + direction[0], joes_body[0][1] + direction[1]
     joes_body.insert(0, new_head)
-    joes_body.pop(-1)
-
+    if not eaten:
+        joes_body.pop(-1)
+    eaten = False
 
 def chick_collision():
     global chick_position, eaten
@@ -43,6 +47,7 @@ def chick_collision():
 def new_position():
     col = randint(1, FIELD_WIDTH - 2)
     row = randint(1, FIELD_HEIGHT - 2)
+    # the while loop is to make sure that the chick and snake are not in the same position
     while (col, row) in joes_body:
         col = randint(1, FIELD_WIDTH -2)
         row = randint(1, FIELD_HEIGHT -2)
@@ -58,9 +63,9 @@ CELLS = [(col, row) for row in range(FIELD_HEIGHT) for col in range(FIELD_WIDTH)
 The body of the snake a.k.a Joe (col, row // 2)
 the body consists of three parts which are the three items in the list below
  the body moves towards the right
-so the body (here tuple 2 and 3) are the body meaning to the left behind the head
-which is tuple 1
-if the order is not from high to low the body will then crash with the head
+so the body (items 2 and 3) are the body positioned to the left behind the head
+(item 1)
+if the order is not from high to low the body will then crash into the head
 """
 joes_body = [(5, FIELD_HEIGHT // 2),(4, FIELD_HEIGHT // 2),(3, FIELD_HEIGHT // 2)]
 DIRECTIONS = {'left': (-1,0),'right': (1,0),'up': (0,-1,),'down': (0,1)}
@@ -68,7 +73,7 @@ DIRECTIONS = {'left': (-1,0),'right': (1,0),'up': (0,-1,),'down': (0,1)}
 direction = DIRECTIONS['right']
 # The position of the chick or food
 chick_position = new_position()
-
+eaten = False
 """
 limit the speed of the while loop to 0.3ms
 run the game over and over until we break it with some command
@@ -99,6 +104,14 @@ while True:
     #update game elements position
     move_joe()
     chick_collision()
+
+    #check death if snake crashes against the border or bites itself
+    if joes_body[0][0] in (0, FIELD_WIDTH -1) or \
+        joes_body[0][1] in (0, FIELD_HEIGHT -1) or \
+        joes_body[0] in joes_body[1:]
+        os.system('cls')
+            break
+
     
 
 
